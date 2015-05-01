@@ -9,6 +9,7 @@ import org.dsa.iot.dslink.node.actions.Parameter;
 import org.dsa.iot.dslink.node.value.Value;
 import org.dsa.iot.dslink.node.value.ValueType;
 import org.vertx.java.core.Handler;
+
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
@@ -110,8 +111,8 @@ public class TwitterThing {
 		public void handle(ActionResult event){
 			
 			String username = event.getParameter("username", ValueType.STRING).getString();
-			userPath = "C:/dgtwitbot/userdata/"+username;
-			File userFile = new File(userPath);
+			File userFile = new File(System.getProperty("user.home"), "dgtwitbot/userdata/"+username);
+			userPath = userFile.getPath();
 			
 			clearErrorMsgs();
 			
@@ -121,7 +122,7 @@ public class TwitterThing {
 					System.out.println("made a user dir");
 				}
 			} else {
-				File tokenFile = new File(userPath+"/accessToken.ser");
+				File tokenFile = new File(userPath, "accessToken.ser");
 				loadAccessToken(tokenFile);
 			}		
 			
@@ -190,7 +191,7 @@ public class TwitterThing {
 		        }else{
 		        	accessToken = twitter.getOAuthAccessToken();
 		        }
-				saveAccessToken(new File(userPath+"/accessToken.ser"));
+				saveAccessToken(new File(userPath, "accessToken.ser"));
 
 				clearErrorMsgs();
 				twitter.setOAuthAccessToken(accessToken);
