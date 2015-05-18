@@ -217,13 +217,12 @@ public class TwitterThing {
 	
 	private class FilterHandler implements Handler<ActionResult> {
 		public void handle(ActionResult event) {
-			ValueType type = ValueType.STRING;
-			String name = event.getParameter("streamName", type).getString();
-			String alllocstrings = event.getParameter("locations", type).getString();
-			String alltrack = event.getParameter("track", type).getString();
-			String allfollowstrings = event.getParameter("follow", type).getString();
-			Number count = event.getParameter("count", ValueType.NUMBER).getNumber();
-			String alllang = event.getParameter("language", type).getString();
+			String name = event.getParameter("streamName").getString();
+			Value alllocstrings = event.getParameter("locations");
+			Value alltrack = event.getParameter("track");
+			Value allfollowstrings = event.getParameter("follow");
+			Value count = event.getParameter("count");
+			Value alllang = event.getParameter("language");
 			
 			Node stream = node.createChild(name).build();
 			Node Atweet = stream.createChild("someTweet").build();
@@ -246,16 +245,16 @@ public class TwitterThing {
 			stream.createChild("endStream").setAction(new Action(Permission.READ, new EndStreamHandler(stream, twitterStream))).build();
 			
 			FilterQuery fq = new FilterQuery();
-			boolean locsSet = (alllocstrings != null && alllocstrings.length() > 0);
-			boolean trackSet = (alltrack != null && alltrack.length() > 0);
-			boolean followSet = (allfollowstrings != null && allfollowstrings.length() > 0);
+			boolean locsSet = (alllocstrings != null && alllocstrings.getString().length() > 0);
+			boolean trackSet = (alltrack != null && alltrack.getString().length() > 0);
+			boolean followSet = (allfollowstrings != null && allfollowstrings.getString().length() > 0);
 			if ((!locsSet) && (!trackSet) && (!followSet)) {
 				builder = err.createChild("filter error message");
 				builder.setValue(new Value("Must specify at least one of locations, track, and follow"));
 				builder.build();
 			}
 			if (locsSet) {
-				String[] locstrings = alllocstrings.split(";");
+				String[] locstrings = alllocstrings.getString().split(";");
 				int loclength = locstrings.length;
 				double[][] locs = new double[loclength][];
 				for (int i=0; i<loclength; i++) {
@@ -270,11 +269,11 @@ public class TwitterThing {
 				fq.locations(locs);
 			}
 			if (trackSet) {
-				String[] track = alltrack.split(",");
+				String[] track = alltrack.getString().split(",");
 				fq.track(track);
 			}
 			if (followSet) {
-				String[] followstrings = allfollowstrings.split(",");
+				String[] followstrings = allfollowstrings.getString().split(",");
 				int followlength = followstrings.length;
 				long[] follow = new long[followlength];
 				for (int i=0; i<followlength; i++) {
@@ -283,10 +282,10 @@ public class TwitterThing {
 				fq.follow(follow);
 			}
 			if (count != null) {
-				fq.count(count.intValue());
+				fq.count(count.getNumber().intValue());
 			}
-			if (alllang != null && alllang.length() > 0) {
-				String[] lang = alllang.split(",");
+			if (alllang != null && alllang.getString().length() > 0) {
+				String[] lang = alllang.getString().split(",");
 				fq.language(lang);
 			}
 			twitterStream.filter(fq);
