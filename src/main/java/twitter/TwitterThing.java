@@ -8,6 +8,8 @@ import org.dsa.iot.dslink.node.actions.ActionResult;
 import org.dsa.iot.dslink.node.actions.Parameter;
 import org.dsa.iot.dslink.node.value.Value;
 import org.dsa.iot.dslink.node.value.ValueType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vertx.java.core.Handler;
 
 import twitter4j.*;
@@ -19,6 +21,11 @@ import java.io.*;
 import java.util.HashSet;
 
 public class TwitterThing {
+	private static final Logger LOGGER;
+	
+	static {
+		LOGGER = LoggerFactory.getLogger(TwitterThing.class);
+	}
 	
 	private Node node;
 	private Node err;
@@ -58,7 +65,7 @@ public class TwitterThing {
             objectOut.close();
         } catch (IOException e) {
             String msg = "IOException while saving accessToken.";
-            System.out.println(msg);
+            LOGGER.error(msg);
         }
 	}
 	
@@ -71,10 +78,10 @@ public class TwitterThing {
                 objectIn.close();
             } catch (IOException e) {
                 String msg = "IOException while loading accessToken.";
-                System.out.println(msg);
+                LOGGER.error(msg);
             } catch (ClassNotFoundException e) {
                 String msg = "ClassNotFoundException while loading accessToken.";
-                System.out.println(msg);
+                LOGGER.error(msg);
             }
         }
 	}
@@ -119,7 +126,7 @@ public class TwitterThing {
 			if (!userFile.exists()) {
 				userFile.setWritable(true);
 				if (userFile.mkdirs()) {
-					System.out.println("made a user dir");
+					LOGGER.debug("made a user dir");
 				}
 			} else {
 				File tokenFile = new File(userPath, "accessToken.ser");
@@ -170,7 +177,7 @@ public class TwitterThing {
 				node.createChild("authorize").setAction(act).build();
 				
 			} catch (TwitterException e) {
-				e.printStackTrace();
+				LOGGER.debug("error: ", e);
 			}
 			
 		}	
@@ -202,12 +209,12 @@ public class TwitterThing {
 		    		NodeBuilder builder = err.createChild("authorization error message");
 					builder.setValue(new Value("401: Unable to get the access token."));
 					builder.build();
-		    		System.out.println("Unable to get the access token.");
+		    		LOGGER.error("Unable to get the access token.");
 		        }else{
 		        	NodeBuilder builder = err.createChild("authorization error message");
 					builder.setValue(new Value("Unable to get the access token."));
 					builder.build();
-		        	te.printStackTrace();
+					LOGGER.debug("error: ", te);
 		        }
 		    }
 			
@@ -376,7 +383,7 @@ public class TwitterThing {
 				NodeBuilder builder = err.createChild("post error message");
 				builder.setValue(new Value("Error updating status"));
 				builder.build();
-				e.printStackTrace();
+				LOGGER.debug("error: ", e);
 			}
 		}
 	}
