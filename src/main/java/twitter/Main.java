@@ -22,7 +22,7 @@ public class Main extends DSLinkHandler{
 			}
 		}
 		//args = new String[] { "-b", "http://localhost:8080/conn" };
-		DSLinkFactory.startResponder("twitResponder", args, new Main());
+		DSLinkFactory.startResponder("twitter", args, new Main());
 	}
 	
 	@Override
