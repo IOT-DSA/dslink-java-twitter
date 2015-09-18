@@ -3,8 +3,8 @@ apply plugin: 'findbugs'
 apply plugin: 'java'
 
 mainClassName = 'twitter.Main'
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
 version = '0.2.1-SNAPSHOT'
 
 repositories {
