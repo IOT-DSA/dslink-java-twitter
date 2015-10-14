@@ -237,11 +237,11 @@ public class TwitterConn {
 			
 			Node stream = node.createChild(name).setValueType(ValueType.STRING).build();
 			stream.setAttribute("filtered", new Value(true));
-			if (alllocstrings!=null || alllocstrings!="") stream.setAttribute("locations", alllocstrings);
-			if (alltrack!=null || alltrack!="") stream.setAttribute("track", alltrack);
-			if (allfollowstrings!=null || allfollowstrings!="") stream.setAttribute("follow", allfollowstrings);
+			if (alllocstrings!=null && !alllocstrings.isEmpty()) stream.setAttribute("locations", alllocstrings);
+			if (alltrack!=null && !alltrack.isEmpty()) stream.setAttribute("track", alltrack);
+			if (allfollowstrings!=null && !allfollowstrings.isEmpty()) stream.setAttribute("follow", allfollowstrings);
 			//if (count!=null) stream.setAttribute("count", count);
-			if (alllang!=null || alllang!="") stream.setAttribute("language", alllang);
+			if (alllang!=null && !alllang.isEmpty()) stream.setAttribute("language", alllang);
 			
 			StreamNode sn = new StreamNode(getMe(), stream);
 			sn.init();
