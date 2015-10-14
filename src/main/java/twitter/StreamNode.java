@@ -51,7 +51,7 @@ public class StreamNode implements StatusListener {
 			Value alllocstrings = node.getAttribute("locations");
 			Value alltrack = node.getAttribute("track");
 			Value allfollowstrings = node.getAttribute("follow");
-			Value count = node.getAttribute("count");
+			//Value count = node.getAttribute("count");
 			Value alllang = node.getAttribute("language");
 			
 			Action act = new Action(Permission.READ, new EditHandler());
@@ -59,7 +59,7 @@ public class StreamNode implements StatusListener {
 			act.addParameter(new Parameter("locations", ValueType.STRING, alllocstrings));
 			act.addParameter(new Parameter("track", ValueType.STRING, alltrack));
 			act.addParameter(new Parameter("follow", ValueType.STRING, allfollowstrings));
-			act.addParameter(new Parameter("count", ValueType.NUMBER, count));
+			//act.addParameter(new Parameter("count", ValueType.NUMBER, count));
 			act.addParameter(new Parameter("language", ValueType.STRING, alllang));
 			Node anode = node.getChild("edit");
 			if (anode == null) node.createChild("edit").setAction(act).build().setSerializable(false);
@@ -102,9 +102,9 @@ public class StreamNode implements StatusListener {
 				}
 				fq.follow(follow);
 			}
-			if (count != null) {
+			/*if (count != null) {
 				fq.count(count.getNumber().intValue());
-			}
+			}*/
 			if (alllang != null && alllang.getString().length() > 0) {
 				String[] lang = alllang.getString().split(",");
 				fq.language(lang);
@@ -139,20 +139,20 @@ public class StreamNode implements StatusListener {
 			Value alllocstrings = event.getParameter("locations");
 			Value alltrack = event.getParameter("track");
 			Value allfollowstrings = event.getParameter("follow");
-			Value count = event.getParameter("count");
+			//Value count = event.getParameter("count");
 			Value alllang = event.getParameter("language");
 			
 			node.removeAttribute("locations");
 			node.removeAttribute("track");
 			node.removeAttribute("follow");
-			node.removeAttribute("count");
+			//node.removeAttribute("count");
 			node.removeAttribute("language");
 			
 			if (node.getName().equals(name)) {
 				if (alllocstrings!=null) node.setAttribute("locations", alllocstrings);
 				if (alltrack!=null) node.setAttribute("track", alltrack);
 				if (allfollowstrings!=null) node.setAttribute("follow", allfollowstrings);
-				if (count!=null) node.setAttribute("count", count);
+				//if (count!=null) node.setAttribute("count", count);
 				if (alllang!=null) node.setAttribute("language", alllang);
 				stop();
 				init();
@@ -162,7 +162,7 @@ public class StreamNode implements StatusListener {
 				if (alllocstrings!=null) newNode.setAttribute("locations", alllocstrings);
 				if (alltrack!=null) newNode.setAttribute("track", alltrack);
 				if (allfollowstrings!=null) newNode.setAttribute("follow", allfollowstrings);
-				if (count!=null) newNode.setAttribute("count", count);
+				//if (count!=null) newNode.setAttribute("count", count);
 				if (alllang!=null) newNode.setAttribute("language", alllang);
 				remove();
 				StreamNode sn = new StreamNode(conn, newNode);
