@@ -234,7 +234,7 @@ public class TwitterConn {
 			//Value count = event.getParameter("count");
 			Value alllang = event.getParameter("language");
 			
-			Node stream = node.createChild(name).setValueType(ValueType.STRING).build();
+			Node stream = node.createChild(name).setValueType(ValueType.MAP).build();
 			stream.setAttribute("filtered", new Value(true));
 			if (alllocstrings!=null && !alllocstrings.toString().isEmpty())
 				stream.setAttribute("locations", alllocstrings);
