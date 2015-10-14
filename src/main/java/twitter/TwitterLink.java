@@ -72,9 +72,6 @@ public class TwitterLink {
 			
 			TwitterConn tc = new TwitterConn(getMe(), cnode);
 			tc.init();
-			
-			
-			
 		}	
 	}
 	

@@ -257,7 +257,7 @@ public class TwitterConn {
 	private class SampleHandler implements Handler<ActionResult> {
 		public void handle(ActionResult event) {
 			String name = event.getParameter("name").getString();
-			Node stream = node.createChild(name).setValueType(ValueType.STRING).build();
+			Node stream = node.createChild(name).setValueType(ValueType.MAP).build();
 			stream.setAttribute("filtered", new Value(false));
 			
 			StreamNode sn = new StreamNode(getMe(), stream);

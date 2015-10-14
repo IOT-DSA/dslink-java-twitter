@@ -8,6 +8,7 @@ import org.dsa.iot.dslink.node.actions.Parameter;
 import org.dsa.iot.dslink.node.value.Value;
 import org.dsa.iot.dslink.node.value.ValueType;
 import org.dsa.iot.dslink.util.handler.Handler;
+import org.dsa.iot.dslink.util.json.JsonObject;
 import twitter4j.FilterQuery;
 import twitter4j.StallWarning;
 import twitter4j.Status;
@@ -157,7 +158,7 @@ public class StreamNode implements StatusListener {
 				stop();
 				init();
 			} else {
-				Node newNode = node.getParent().createChild(name).setValueType(ValueType.STRING).build();
+				Node newNode = node.getParent().createChild(name).setValueType(ValueType.MAP).build();
 				newNode.setAttribute("filtered", new Value(true));
 				if (alllocstrings!=null) newNode.setAttribute("locations", alllocstrings);
 				if (alltrack!=null) newNode.setAttribute("track", alltrack);
@@ -200,8 +201,8 @@ public class StreamNode implements StatusListener {
 //		textNode.setValue(new Value(status.getText()));
 
 		String jsonStr = TwitterObjectFactory.getRawJSON(status);
-		//JsonObject jsonObj = new JsonObject(jsonStr);
-		node.setValue(new Value(jsonStr));
+		JsonObject jsonObj = new JsonObject(jsonStr);
+		node.setValue(new Value(jsonObj));
 	}
 
 	public void onTrackLimitationNotice(int arg0) {
