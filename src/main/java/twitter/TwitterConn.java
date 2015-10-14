@@ -1,7 +1,5 @@
 package twitter;
 
-import java.util.HashSet;
-
 import org.dsa.iot.dslink.node.Node;
 import org.dsa.iot.dslink.node.NodeBuilder;
 import org.dsa.iot.dslink.node.Permission;
@@ -10,11 +8,10 @@ import org.dsa.iot.dslink.node.actions.ActionResult;
 import org.dsa.iot.dslink.node.actions.Parameter;
 import org.dsa.iot.dslink.node.value.Value;
 import org.dsa.iot.dslink.node.value.ValueType;
+import org.dsa.iot.dslink.util.handler.Handler;
 import org.dsa.iot.dslink.util.json.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.dsa.iot.dslink.util.handler.Handler;
-
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -22,6 +19,8 @@ import twitter4j.TwitterStream;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.ConfigurationBuilder;
+
+import java.util.HashSet;
 
 public class TwitterConn {
 	private static final Logger LOGGER;
@@ -232,7 +231,7 @@ public class TwitterConn {
 			Value alllocstrings = event.getParameter("locations");
 			Value alltrack = event.getParameter("track");
 			Value allfollowstrings = event.getParameter("follow");
-			Value count = event.getParameter("count");
+			//Value count = event.getParameter("count");
 			Value alllang = event.getParameter("language");
 			
 			Node stream = node.createChild(name).setValueType(ValueType.STRING).build();
