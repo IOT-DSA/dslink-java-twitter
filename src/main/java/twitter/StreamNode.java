@@ -9,14 +9,7 @@ import org.dsa.iot.dslink.node.value.Value;
 import org.dsa.iot.dslink.node.value.ValueType;
 import org.dsa.iot.dslink.util.handler.Handler;
 import org.dsa.iot.dslink.util.json.JsonObject;
-import twitter4j.FilterQuery;
-import twitter4j.StallWarning;
-import twitter4j.Status;
-import twitter4j.StatusDeletionNotice;
-import twitter4j.StatusListener;
-import twitter4j.TwitterObjectFactory;
-import twitter4j.TwitterStream;
-import twitter4j.TwitterStreamFactory;
+import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
 
@@ -202,7 +195,9 @@ public class StreamNode implements StatusListener {
 
 		String jsonStr = TwitterObjectFactory.getRawJSON(status);
 		JsonObject jsonObj = new JsonObject(jsonStr);
-		node.setValue(new Value(jsonObj));
+		Value value = new Value(jsonObj);
+        value.setSerializable(false);
+		node.setValue(value);
 	}
 
 	public void onTrackLimitationNotice(int arg0) {
