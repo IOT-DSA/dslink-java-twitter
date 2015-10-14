@@ -163,7 +163,7 @@ public class TwitterConn {
 		act.addParameter(new Parameter("locations", ValueType.STRING));
 		act.addParameter(new Parameter("track", ValueType.STRING));
 		act.addParameter(new Parameter("follow", ValueType.STRING));
-		act.addParameter(new Parameter("count", ValueType.NUMBER));
+		//act.addParameter(new Parameter("count", ValueType.NUMBER));
 		act.addParameter(new Parameter("language", ValueType.STRING));
 		builder.setAction(act);
 		builder.build().setSerializable(false);
@@ -237,11 +237,11 @@ public class TwitterConn {
 			
 			Node stream = node.createChild(name).setValueType(ValueType.STRING).build();
 			stream.setAttribute("filtered", new Value(true));
-			if (alllocstrings!=null) stream.setAttribute("locations", alllocstrings);
-			if (alltrack!=null) stream.setAttribute("track", alltrack);
-			if (allfollowstrings!=null) stream.setAttribute("follow", allfollowstrings);
-			if (count!=null) stream.setAttribute("count", count);
-			if (alllang!=null) stream.setAttribute("language", alllang);
+			if (alllocstrings!=null || alllocstrings!="") stream.setAttribute("locations", alllocstrings);
+			if (alltrack!=null || alltrack!="") stream.setAttribute("track", alltrack);
+			if (allfollowstrings!=null || allfollowstrings!="") stream.setAttribute("follow", allfollowstrings);
+			//if (count!=null) stream.setAttribute("count", count);
+			if (alllang!=null || alllang!="") stream.setAttribute("language", alllang);
 			
 			StreamNode sn = new StreamNode(getMe(), stream);
 			sn.init();
